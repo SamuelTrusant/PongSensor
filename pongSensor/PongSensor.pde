@@ -1,5 +1,4 @@
 import processing.serial.*;
-
 import processing.sound.*;
 
 Serial serialPort;  // Create object from Serial class
@@ -58,7 +57,7 @@ void setup ( ) {
 
 void draw ( ) {
   //dibujamos el campo de juego
-  background (127);
+  background (0);
   stroke(255);
   strokeWeight(2);
   for(int i = 0; i < height; i += 40){
@@ -76,13 +75,21 @@ void draw ( ) {
   rect(player2.x, player2.y, player2.sizex, player2.sizey);
   //player1.Move(vPlayers);
   player2.Move(vPlayers);
+
+
+  //while ( serialPort.available() > 0) {
+  //  val = serialPort.read();
+  //}
+  
   if ( serialPort.available() > 0) {
-    val = serialPort.read();
-    
-    player1.y = map(val, 0., 150., 0., 800. - player1.sizey);
-    player1.CheckBall();
-    println(val);
-  } 
+    val = serialPort.last();
+    serialPort.clear();
+  }
+  
+  player1.y = map(val, 20., 150., 0., 800. - player1.sizey);
+  player1.CheckBall();
+  println(val);
+  
   
   if(score != 0){
     frames ++;

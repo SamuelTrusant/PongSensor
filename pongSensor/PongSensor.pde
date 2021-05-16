@@ -1,7 +1,6 @@
 import processing.serial.*;
 
 import processing.sound.*;
-//import gifAnimation.*;
 
 Serial serialPort;  // Create object from Serial class
 int val;     // Data received from the serial port
@@ -43,8 +42,8 @@ Player player2;
 
 void setup ( ) {
   size(1000 , 800);
-  //String portName = Serial.list()[0];
-  //serialPort = new Serial(this, portName, 9600);
+  String portName = Serial.list()[1];
+  serialPort = new Serial(this, portName, 9600);
   
   ball = new Ball(ballSize,vBall);
   player1 = new Player(playerXSize,playerYSize, true);
@@ -79,6 +78,10 @@ void draw ( ) {
   player2.Move(vPlayers);
   if ( serialPort.available() > 0) {
     val = serialPort.read();
+    
+    player1.y = map(val, 0., 150., 0., 800. - player1.sizey);
+    player1.CheckBall();
+    println(val);
   } 
   
   if(score != 0){

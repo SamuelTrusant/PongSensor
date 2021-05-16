@@ -42,5 +42,3 @@ Guión de prácticas de CIU
 Referencias Processing https://processing.org/reference/
 
 Librería sound https://processing.org/reference/libraries/sound/
-
-Librería GifAnimation https://github.com/extrapixel/gif-animation

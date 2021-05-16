@@ -2,7 +2,7 @@
 El juego de pong hecho en processing, actualizado para que uno de los jugadores se controle con un sensor de distancia conectado a una placa de Arduino.
 
 ### Autores:
-- Mario Ferrero Fernández
+- Mario Ferrero Fernández 
 - Leopoldo López Reverón
 - Jonay Suárez Ramírez
 - Samuel Trujillo Santana

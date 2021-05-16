@@ -1,10 +1,14 @@
 # Pong
-El juego de pong hecho en processing.
+El juego de pong hecho en processing, actualizado para que uno de los jugadores se controle con un sensor de distancia conectado a una placa de Arduino.
 
-Autor: Samuel Trujillo Santana
+### Autores:
+- Mario Ferrero Fernández
+- Leopoldo López Reverón
+- Jonay Suárez Ramírez
+- Samuel Trujillo Santana
 
 ## Controles
-jugador 1: 'w' y 's' para moverse arriba y abajo, respectivamente.
+jugador 1: sensor de distancia. Subir la mano para subir el jugador y viceversa.
 jugador 2: flechas arriba y abajo para moverse.
 se puede pulsar la tecla 'r' para resetear el juego.
 
@@ -32,6 +36,9 @@ En este fichero inicializamos la pelota y los dos jugadores, pintamos el entorno
 ## Vista del juego
 
 ![](export.gif)
+
+## actualización con el sensor de distancia
+En esta nueva versión el jugador 1 se mueve utilizando un sensor de distancia conectado a la placa Arduino
 
 ## Referencias
 Guión de prácticas de CIU

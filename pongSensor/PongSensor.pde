@@ -9,17 +9,19 @@ float ballSize = 10;
 float playerXSize = 10;
 float playerYSize = 100;
 
+float[] lastPositions = new float[20];
+int position = 0;
+
 //velocidades
 float vPlayers = 20;
 float vBall = 10;
-
 
 float vyMax = 8;
 
 //tiempo entre goles
 int framesmaxWait = 80;
 int frames = 0;
-
+int frameArduino = 5;
 
 //booleanos para las teclas
 boolean w, s, up, down = false;
@@ -39,17 +41,18 @@ Ball ball;
 Player player1;
 Player player2;
 
-void setup ( ) {
-  size(1000 , 800);
+void setup () {
+  smooth();
+  size(1000, 800);
   String portName = Serial.list()[1];
   serialPort = new Serial(this, portName, 9600);
   
-  ball = new Ball(ballSize,vBall);
-  player1 = new Player(playerXSize,playerYSize, true);
-  player2 = new Player(playerXSize,playerYSize, false);
-  sonidoGoal = new SoundFile (this, "Alesis-S4-Plus-Clean-Gtr-C4.wav");
-  sonidoWall = new SoundFile (this, "Korg-01W-MuteGuitar-C3.wav");
-  sonidoPlayer = new SoundFile (this, "Korg-N1R-Harmonics-C5.wav");
+  ball = new Ball(ballSize, vBall);
+  player1 = new Player(playerXSize, playerYSize, true);
+  player2 = new Player(playerXSize, playerYSize, false);
+  sonidoGoal = new SoundFile(this, "Alesis-S4-Plus-Clean-Gtr-C4.wav");
+  sonidoWall = new SoundFile(this, "Korg-01W-MuteGuitar-C3.wav");
+  sonidoPlayer = new SoundFile(this, "Korg-N1R-Harmonics-C5.wav");
   
   //gifExport = new GifMaker(this, "export.gif");
   //gifExport.setRepeat(0);
@@ -61,13 +64,13 @@ void draw ( ) {
   stroke(255);
   strokeWeight(2);
   for(int i = 0; i < height; i += 40){
-      line(width/2, i, width/2, i+20);
+      line(width / 2, i, width / 2, i + 20);
   }
   
   //dibujamos el marcador
   textSize(50);
-  text( player1.score , width/4, 50) ;
-  text( player2.score , width*3/4, 50) ;
+  text(player1.score , width/4, 50) ;
+  text(player2.score , width*3/4, 50) ;
 
 
   //dibujamos los jugadores
@@ -81,12 +84,26 @@ void draw ( ) {
   //  val = serialPort.read();
   //}
   
-  if ( serialPort.available() > 0) {
+  if (serialPort.available() > 0) {
     val = serialPort.last();
     serialPort.clear();
   }
   
-  player1.y = map(val, 20., 150., 0., 800. - player1.sizey);
+  float h = map(val, 20., 140., 0., 800. - player1.sizey);
+  
+  lastPositions[position % lastPositions.length] = h;
+  position ++;
+
+  if (position % lastPositions.length == 0) position = 0;
+  
+  
+  
+  int w = 0;
+  for (int i = 0; i < lastPositions.length; i++) w += lastPositions[i];
+  
+  if (! (player1.y - h > -20 && player1.y - h < 20))
+    player1.y = w / lastPositions.length;
+  
   player1.CheckBall();
   println(val);
   
@@ -187,7 +204,7 @@ void ResetScores() {
   player1.score = 0;
   player2.score = 0;
   score = -1;
-  int coin = round(random(0,1));
-  boolean res = coin == 1? false:true;
+  int coin = round(random(0, 1));
+  boolean res = coin == 1 ? false : true;
   ball.ResetBall(res);
 }

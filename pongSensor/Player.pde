@@ -12,7 +12,8 @@ class Player{
     } else {
       x = width - 30;
     }
-    y = height/2;
+    
+    y = height / 2;
     this.sizex = sizex;
     this.sizey = sizey;
     this.isPlayer1 = isPlayer1;
@@ -23,25 +24,25 @@ class Player{
     if(isPlayer1){
       if(w){
         if(y > 0){
-          y-=v;
+          y -= v;
         }
       }
       
       if(s){
         if(y + sizey < height){
-          y+=v;
+          y += v;
         }
       }
     } else {
       if(up){
         if(y > 0){
-          y-=v;
+          y -= v;
         }
       }
       
       if(down){
         if(y + sizey < height){
-          y+=v;
+          y += v;
         }
       }
     }
@@ -54,8 +55,8 @@ class Player{
   }
   
   public void CheckBall(){
-    if(ball.x - ball.size/2 < x + sizex && ball.x + ball.size/2 > x){
-      if(ball.y - ball.size/2 < y + sizey && ball.y + ball.size/2 > y){
+    if(ball.x - ball.size / 2 < x + sizex && ball.x + ball.size / 2 > x){
+      if(ball.y - ball.size / 2 < y + sizey && ball.y + ball.size / 2 > y){
         thread ("SuenaPlayer");
         ChangeBallDirection();
       }
@@ -63,15 +64,20 @@ class Player{
   }
   
   
-  /**este método ajusta la dirección de la 
-  *pelota segun la parte del jugador donde impacte */
+  /**
+  *
+  *este método ajusta la dirección de la 
+  *pelota segun la parte del jugador donde impacte 
+  *
+  */
+  
   private void ChangeBallDirection(){
      float distanceToCenter = y + sizey/2 - ball.y;
-     ball.vy = (-distanceToCenter / (sizey/2)) * vyMax;
+     ball.vy = (- distanceToCenter / (sizey / 2)) * vyMax;
      //ball.vx = -ball.vx;
-     ball.vx = sqrt(vBall*vBall - ball.vy*ball.vy);
-     if(!isPlayer1){
-       ball.vx = -ball.vx; 
+     ball.vx = sqrt(vBall * vBall - ball.vy * ball.vy);
+     if(! isPlayer1){
+       ball.vx = - ball.vx; 
      }
   }
 }
